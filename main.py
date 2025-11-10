@@ -78,8 +78,8 @@ class MainWindow(QWidget):
         self.btn_edit_task.clicked.connect(self.edit_task)
         self.btn_del_task = QPushButton("❌ Удалить")
         self.btn_del_task.clicked.connect(self.delete_task)
-        self.btn_top5 = QPushButton("📅 Топ-5 задач")
-        self.btn_top5.clicked.connect(self.show_top5)
+        self.btn_top5 = QPushButton("📅 задачи")
+        self.btn_top5.clicked.connect(self.show_tasks)
 
         for b in [self.btn_add_task, self.btn_edit_task, self.btn_del_task, self.btn_top5]:
             self.btn_layout.addWidget(b)
@@ -224,13 +224,13 @@ class MainWindow(QWidget):
         self.update_tasks()
         save_data()
 
-    def show_top5(self):
+    def show_tasks(self):
         all_tasks = []
         for disc, tasks in disciplines.items():
             for t in tasks:
                 all_tasks.append((disc, t["task"], t["deadline"]))
         all_tasks.sort(key=lambda x: (x[2] is None, x[2] if x[2] else datetime.max))
-        top5 = all_tasks[:5]
+        top5 = all_tasks
         dlg = QDialog(self)
         dlg.setWindowTitle("Топ-5 задач")
         layout = QVBoxLayout(dlg)
